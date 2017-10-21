@@ -10,12 +10,11 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
 
         Payment payment = new Payment(request.getPhoneNumber(), request.getStudentNumber(), request.getAmount());
         new ExternalServices().publishMessage(payment);
-        
-//        try {
-//            new MpesaPayment().onlinePayment(payment);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            new MpesaPayment().onlinePayment(payment);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         PaymentResponse response = PaymentResponse.newBuilder().build();
         responseObserver.onNext(response);
